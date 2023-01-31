@@ -31,7 +31,7 @@ locations = {
 	{ ['x'] = -311.8, ['y'] = 228.2, ['z'] = 87.8, ['noBlip'] = true}, -- studio los santos
 	{ ['x'] = -620.3, ['y'] = 52.7, ['z'] = 43.7, ['noBlip'] = true}, -- Tinsel Towers Apartments
 	{ ['x'] = 364.4, ['y'] = -1700.6, ['z'] = 32.5}, -- court house (davis, LS)
-	{ ["x"] = -1093.6023, ["y"] = -812.4022, ["z"] = 4.8649, ["jobs"] = {"sheriff", "ems", "police", "judge", "corrections"}, ["noBlip"] = true }, -- Vespucci PD
+	{ ["x"] = -1073.4, ["y"] = -879.7, ["z"] = 4.8, ["jobs"] = {"sheriff", "ems", "police", "judge", "corrections"}, ["noBlip"] = true }, -- Vespucci PD
 	{ ["x"] = 817.88757324219, ["y"] = -1356.1462402344, ["z"] = 26.115545272827, ["jobs"] = {"sheriff", "ems", "police", "judge", "corrections"}, ["noBlip"] = true }, -- La Mesa PD
 	{ ['x'] = 1127.5, ['y'] = 2670.8, ['z'] = 38.1, ['noBlip'] = true}, -- Sandy Shores Motel
 	{ ['x'] = 388.5, ['y'] = 2647.6, ['z'] = 44.5, ['noBlip'] = true}, -- Eastern Motel (sandy)
@@ -82,7 +82,7 @@ locations = {
 	{x = -2315.1484375, y = 283.1760559082, z = 169.46704101563, noBlip = true}, -- plasma kart 
 	{x = 897.21588134766, y = -1019.8331298828, z = 34.966979980469, noBlip = true}, -- Auto Repair Place
 	{x = -1669.1839599609, y = -541.4306640625, z = 35.10620880127, noBlip = true},
-	{x = 471.7410, y = -1873.5828, z = 26.8678, noBlip = true} -- Atomic Autos
+	{x = -2017.698, y = -478.3825, z = 11.39343, noBlip = true}
 }
 
 local VEHICLE_DAMAGES = {}
@@ -99,8 +99,6 @@ Citizen.CreateThread(function()
 end)
 
 local nearbyLocations = {}
-
-local lastUnderglowColorForVeh = {}
 
 -- thread to record nearby locations as an optimization
 Citizen.CreateThread(function()
@@ -154,8 +152,6 @@ end)
 RegisterNetEvent("garage:storeVehicle")
 AddEventHandler("garage:storeVehicle", function()
 	local veh = GetVehiclePedIsIn(GetPlayerPed(-1), true)
-	local underglowEnabled = isUnderglowOn(veh)
-	local underglowR, underglowG, underglowB = GetVehicleNeonLightsColour(veh)
 	local plate = GetVehicleNumberPlateText(veh)
 	plate = exports.globals:trim(plate)
 	exports.globals:notify("Vehicle has been returned to the garage!")
@@ -192,13 +188,6 @@ AddEventHandler("garage:storeVehicle", function()
 		TriggerServerEvent("garage:storeKey", plate)
 		-- save fuel
 		TriggerServerEvent("fuel:save", plate)
-		if underglowEnabled then
-			if hasChangedUnderglowColor(plate, { r = underglowR, g = underglowG, b = underglowB }) then
-				-- save underglow color (cause it can be changed with the RGB controller)
-				TriggerServerEvent("mechanic:saveUnderglow", plate, underglowR, underglowG, underglowB)
-			end
-			lastUnderglowColorForVeh[plate] = nil
-		end
 	end
 end)
 
@@ -289,16 +278,6 @@ AddEventHandler("garage:spawn", function(vehicle)
 			end
 		end
 
-		-- record underglow if applicable (for optimization purposes)
-		if isUnderglowOn(vehicle) then
-			local currentR, currentG, currentB = GetVehicleNeonLightsColour(vehicle)
-			lastUnderglowColorForVeh[plateText] = {
-				r = currentR,
-				g = currentG,
-				b = currentB
-			}
-		end
-
 	end)
 
 end)
@@ -313,26 +292,4 @@ function DrawText3D(x, y, z, text)
 	DrawText(_x,_y)
 	local factor = (string.len(text)) / 470
 	DrawRect(_x,_y+0.0125, 0.015+factor, 0.03, 41, 11, 41, 68)
-end
-
-function isUnderglowOn(veh)
-	local indexes = {0, 1, 2, 3}
-	for i = 1, #indexes do
-		if IsVehicleNeonLightEnabled(veh, indexes[i]) then
-			return true
-		end
-	end
-	return false
-end
-
-function hasChangedUnderglowColor(plate, currentRgb)
-	if lastUnderglowColorForVeh[plate].r ~= currentRgb.r then
-		return true
-	elseif lastUnderglowColorForVeh[plate].g ~= currentRgb.g then
-		return true
-	elseif lastUnderglowColorForVeh[plate].b ~= currentRgb.b then
-		return true
-	else
-		return false
-	end
 end
