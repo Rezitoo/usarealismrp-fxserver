@@ -266,7 +266,7 @@ end
 
 function hasFelonyOnRecord(src)
 	local felonyChargeNumbers = {
-		'PC 187', 'PC 192', 'PC 206', 'PC 207', 'PC 211', 'PC 215', 'PC 245', 'PC 487', '18720', '29800', '33410', '2331', '2800.2', '2800.3', '2800.4', '51-50', '5150'
+		'PC 187', 'PC 192', 'PC 206', 'PC 207', 'PC 211', 'PC 215', 'PC 245', 'PC 487', '18720', '29800', '33410', '2331', '2800.2', '2800.3', '2800.4', '51-50', '5150', '23109(b)'
 	}
 	local char = exports["usa-characters"]:GetCharacter(src)
 	local chargeHistory = char.get("criminalHistory")

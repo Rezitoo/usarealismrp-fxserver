@@ -310,6 +310,7 @@ function GetDLSuspensionDays(charges) -- driver license
 		["23153"] = 30,
 		["10851"] = 4,
 		["14601"] = 2,
+		["23109(b)"] = 14,
 	}
 	local daysTotal = 0
 	for code, days in pairs(codes) do
