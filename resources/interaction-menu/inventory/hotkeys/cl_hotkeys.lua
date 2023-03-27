@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
                         vehiclePlate = exports.globals:trim(vehiclePlate)
                     end
                     -- cycle through slots keys --
-                    if IsDisabledControlJustPressed(24, KEYS.TAB) then
+                    if IsDisabledControlJustPressed(24, KEYS.CTRL) then
                         local WEAPON_UNARMED = -1569615261
                         GiveWeaponToPed(me, WEAPON_UNARMED, 0, false, true)
                         SetCurrentPedWeapon(me, WEAPON_UNARMED, true)

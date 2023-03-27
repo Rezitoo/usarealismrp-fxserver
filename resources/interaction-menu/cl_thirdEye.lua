@@ -1,47 +1,19 @@
+local bones = {
+	["wheel_lf"] = 0,
+	["wheel_rf"] = 1,
+	["wheel_lm1"] = 2,
+	["wheel_rm1"] = 3,
+	["wheel_lr"] = 4,
+	["wheel_rr"] = 5,
+	["wheel_lm2"] = 45,
+	["wheel_lm3"] = 46,
+	["wheel_rm2"] = 47,
+	["wheel_rm3"] = 48
+}
+
 function onInteract(targetData,itemData)
     print(targetData.name,targetData.label) --> my_buffalo_target   Buffalo
     print(itemData.name,itemData.label)     --> lock_door           Lock Door
-end
-
-function onATMInteract(targetData, itemData)
-    if itemData.name == "use" then
-        local coords = GetEntityCoords(exports.banking:GetClosestATM())
-        TriggerServerEvent("bank:getBalanceForGUI", coords)
-    elseif itemData.name == "hack" then
-        local hasDrill = TriggerServerCallback {
-            eventName = "interaction:hasItem",
-            args = { "Drill" }
-        }
-        if hasDrill then
-            TriggerEvent("banking:DrillATM")
-        else
-            exports.globals:notify("Need a drill")
-        end
-    end
-end
-
-function onPlantInteract(targetData, itemData)
-    if itemData.name == "water" then
-        local hasRequiredItem = TriggerServerCallback {
-            eventName = "interaction:hasItem",
-            args = { "Watering Can" }
-        }
-        if hasRequiredItem then
-            TriggerEvent("cultivation:water")
-        else
-            exports.globals:notify("Need a watering can")
-        end
-    elseif itemData.name == "feed" then
-        local hasRequiredItem = TriggerServerCallback {
-            eventName = "interaction:hasItem",
-            args = { "Fertilizer" }
-        }
-        if hasRequiredItem then
-            TriggerEvent("cultivation:feed")
-        else
-            exports.globals:notify("Need fertilizer")
-        end
-    end
 end
 
 function onVehicleOptionSelect(a, buttonInfo, hitHandle)
@@ -80,6 +52,10 @@ function onVehicleOptionSelect(a, buttonInfo, hitHandle)
         end
     elseif buttonInfo.label == "Stickers" then
         TriggerEvent("rcore_stickers:open")
+    elseif buttonInfo.label == "Slash Tire" then
+        for name, index in pairs(bones) do
+            exports.slashtires:TargetTireSlash(hitHandle, {[name]=index})
+        end
     end
 end
 
@@ -388,6 +364,10 @@ function addCivVehicleOptions()
             name = "tow",
             label = "Tow"
         },
+        {
+            name = "slashtire",
+            label = "Slash Tire"
+        },
     })
 end
 
@@ -449,45 +429,8 @@ function addMechanicVehicleOptions()
     })
 end
 
-function addCivModelOptions()
-    local atmModels = {
-        -1126237515,
-        -870868698,
-        506770882
-    }
-    local weedPlantModels = {
-        GetHashKey("bkr_prop_weed_01_small_01a"),
-        GetHashKey("bkr_prop_weed_01_small_01b"),
-        GetHashKey("bkr_prop_weed_01_small_01c"),
-        GetHashKey("bkr_prop_weed_med_01a"),
-        GetHashKey("bkr_prop_weed_med_01b"),
-        GetHashKey("bkr_prop_weed_lrg_01b")
-    }
-    local atmTargetIds = target.addModels('ATMs', 'ATM', 'fas fa-usd-circle', atmModels, 1.0, onATMInteract, {
-        {
-            name = 'use',
-            label = 'Use'
-        },
-        {
-            name = 'hack',
-            label = 'Hack'
-        }
-    })
-    local plantTargetIds = target.addModels('Plants', 'Plant', 'fa fa-leaf', weedPlantModels, 1.0, onPlantInteract, {
-        {
-            name = 'water',
-            label = 'Water'
-        },
-        {
-            name = 'feed',
-            label = 'Feed'
-        }
-    })
-end
-
 addCivPlayerOptions()
 addCivVehicleOptions()
-addCivModelOptions()
 
 RegisterNetEvent("thirdEye:updateActionsForNewJob")
 AddEventHandler("thirdEye:updateActionsForNewJob", function(job)
