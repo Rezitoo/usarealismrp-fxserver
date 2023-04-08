@@ -601,8 +601,8 @@ local vehicleShopItems = {
 			{make = "Lamborghini", model = "Gallardo LW", price = 450000, hash = "GallardoLW", storage_capacity = 120.0},
 			{make = "Lamborghini", model = "Huracan Evo 2 (2022) (NOT ROAD LEGAL)", price = 1800000, hash = "evo2", storage_capacity = 120.0},
 			{make = "Lamborghini", model = "Huracan LW", price = 750000, hash = "lwhuracan", storage_capacity = 120.0},
-			{make = "Lamborghini", model = "Murcielago LP-670", price = 450000, hash = "lp670", storage_capacity = 120.0},
-			{make = "Lamborghini", model = "Murcielago LP-670 LW", price = 450000, hash = "lwlp670", storage_capacity = 120.0},
+			{make = "Lamborghini", model = "Murcielago LP-670", price = 500000, hash = "lp670", storage_capacity = 120.0},
+			{make = "Lamborghini", model = "Murcielago LP-670 LW", price = 550000, hash = "lwlp670", storage_capacity = 120.0},
 			{make = "Lamborghini", model = "LP 700R", price = 850000, hash = "lp700r", storage_capacity = 120.0},
 			{make = "Lamborghini", model = "Urus", price = 250000, hash = "urustc", storage_capacity = 280.0},
 			{make = "Lamborghini", model = "Sian", price = 3800000, hash = "rmodsianr", storage_capacity = 120.0},
@@ -646,7 +646,7 @@ local vehicleShopItems = {
 			{make = "Mercedes-Benz", model = "CLK LM (NOT ROAD LEGAL)", price = 2600000, hash = "clklm", storage_capacity = 120.0},
 			--
 			{make = "Mitsubishi", model = "EVO IX (DRIFT)", price = 85000, hash = "evoix", storage_capacity = 220.0},
-			{make = "Mitsubishi", model = "Lancer Evolution IX Voltex", price = 95000, hash = "topfoil", storage_capacity = 220.0},
+			{make = "Mitsubishi", model = "Lancer Evolution IX Voltex", price = 150000, hash = "topfoil", storage_capacity = 220.0},
 			--
 			{make = "Nissan", model = "240SX (DRIFT)", price = 70000, hash = "rmod240sx", storage_capacity = 160.0},
 			{make = "Nissan", model = "240SX (s14) (DRIFT)", price = 75000, hash = "silvia3", storage_capacity = 160.0},
@@ -672,7 +672,7 @@ local vehicleShopItems = {
 			{make = "Porsche", model = "718 Cayman GT4", price = 270000, hash = "por718gt4", storage_capacity = 160.0},
 			{make = "Porsche", model = "911 Turbo S", price = 280000, hash = "pts21", storage_capacity = 160.0},
 			{make = "Porsche", model = "911 (1973)", price = 60000, hash = "porrs73", storage_capacity = 160.0},
-			{make = "Porsche", model = "911 (993) RWB Rotana", price = 120000, hash = "911rwb", storage_capacity = 160.0},
+			{make = "Porsche", model = "911 (993) RWB Rotana", price = 220000, hash = "911rwb", storage_capacity = 160.0},
 			{make = "Porsche", model = "918", price = 1400000, hash = "918", storage_capacity = 120.0},
 			{make = "Porsche", model = "928 GTS (1993)", price = 60000, hash = "928gts", storage_capacity = 160.0},
 			{make = "Porsche", model = "GT1", price = 3850000, hash = "gt1", storage_capacity = 160.0},
